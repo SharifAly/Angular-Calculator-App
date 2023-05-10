@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  input: string = '';
-  result: string = '';
-  i: any;
-  calcArray: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
+  // Arrays for Input and Results
+
+  input: any = '';
+  resultAdd: any[] = [];
+  resultSubtract: any[] = [];
+  resultMultiply: any[] = [];
+  resultDivide: any[] = [];
+  divideResult: any;
 
   // Add Numbers
 
@@ -99,15 +103,50 @@ export class AppComponent implements OnInit {
     this.input = '0';
   }
 
-  multiply() {}
+  multiply() {
+    this.resultMultiply.push(Number(this.input));
+    console.log(this.resultMultiply);
+    this.input = '0';
+  }
 
-  divide() {}
+  divide() {
+    this.resultDivide.push(Number(this.input));
+    console.log(this.resultDivide);
+    this.input = '0';
+  }
 
-  subtract() {}
+  subtract() {
+    this.resultSubtract.push(Number(this.input));
+    console.log(this.resultSubtract);
+    this.input = '0';
+  }
 
-  add() {}
+  add() {
+    this.resultAdd.push(Number(this.input));
+    console.log(this.resultAdd);
+    this.input = '0';
+  }
 
-  calc() {}
+  calc() {
+    if (this.input == '0') {
+      this.input = '0';
+    } else if (this.resultAdd[0]) {
+      this.input = this.resultAdd[0] + Number(this.input);
+      this.resultAdd = [];
+    } else if (this.resultMultiply[0]) {
+      this.input = this.resultMultiply[0] * Number(this.input);
+      this.resultMultiply = [];
+    } else if (this.resultSubtract[0]) {
+      this.input = this.resultSubtract[0] - Number(this.input);
+      this.resultSubtract = [];
+    } else {
+      // this.input = this.resultDivide[0] / Number(this.input);
+      // this.resultDivide = [];
+      this.divideResult = this.resultDivide[0] / Number(this.input);
+      this.input = this.divideResult.toFixed(5);
+      this.resultDivide = [];
+    }
+  }
 
   ngOnInit(): void {
     // Set Input value default
